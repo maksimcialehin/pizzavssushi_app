@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, SafeAreaView, Text, Image, FlatList } from "react-native"
+import { TouchableOpacity } from "react-native-gesture-handler";
 import client from "../../api/client";
 
-const ListView = () => {
+const ListView = ({ navigation }) => {
     const [data, setData] = useState([]);
     const myText = "New Goblin Mode"
 
@@ -30,9 +31,19 @@ const ListView = () => {
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => {
                     return (
-                        <Text style={styles.itemText}>
-                            {item.restaurant_name}, {item.city}
-                        </Text>
+                        <TouchableOpacity 
+                            onPress={() => {
+                                navigation.navigate("Detail", {
+                                    objurl: item.absolute_url,
+                                    hey: "Best Pizza"
+                                });
+                            }}
+                        >
+                            <Text style={styles.itemText}>
+                                {item.restaurant_name}, {item.city}
+                            </Text>
+                        </TouchableOpacity>
+
                     );
                 }}
             />
