@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, SafeAreaView, Text, Image, FlatList } from "react-native"
+import { StyleSheet, SafeAreaView, FlatList, View } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler";
 import client from "../../api/client";
+import Card from "./shared/card";
 
 const ListView = ({ navigation }) => {
     const [data, setData] = useState([]);
-    const myText = "New Goblin Mode"
 
     const getList = async () => {
         const response = await client.get("/");
@@ -18,65 +18,39 @@ const ListView = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.center}>
-            <Image
-                style={styles.pizzaImage}
-                source={{uri: "https://static.vecteezy.com/system/resources/previews/009/384/620/original/fresh-pizza-and-pizza-box-clipart-design-illustration-free-png.png"}}
-            />
-            <Text style={styles.baseText}>Pizza vs Sushi App</Text>
-            <Text style={styles.newText}>{myText}</Text>
-            <Text style={styles.title}>List View</Text>
-            <Text>{data.length} Pizzerias</Text>
-            <FlatList
-                data={data}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => {
-                    return (
-                        <TouchableOpacity 
-                            onPress={() => {
-                                navigation.navigate("Detail", {
-                                    objurl: item.absolute_url,
-                                    hey: "Best Pizza"
-                                });
-                            }}
-                        >
-                            <Text style={styles.itemText}>
-                                {item.restaurant_name}, {item.city}
-                            </Text>
-                        </TouchableOpacity>
+            <View style={styles.container}>
+                <FlatList
+                    data={data}
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={({ item }) => {
+                        return (
+                            <TouchableOpacity 
+                                onPress={() => {
+                                    navigation.navigate("Detail", {
+                                        objurl: item.absolute_url,
+                                    });
+                                }}
+                            >
+                                <Card
+                                    logo={item.logo_image}
+                                    title={item.restaurant_name}
+                                    details={item.city}
+                                />
+                            </TouchableOpacity>
 
-                    );
-                }}
-            />
+                        );
+                    }}
+                />
+            </View>     
         </SafeAreaView>
     );
 
 }
 
 const styles = StyleSheet.create({
-    center: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    title: {
-        fontSize: 36,
-        marginBottom: 16,
-    },
-    baseText: {
-        color: "navy",
-        fontSize: 30,
-        fontStyle: "italic",
-    },
-    newText: {
-        color: "red",
-    },
-    pizzaImage: {
-        width: 220,
-        height: 220,
-    },
-    itemText: {
-        color: "green",
-        fontSize: 20,
+    container: {
+        backgroundColor: "#eeeeee",
+        padding: 20,
     },
 });
 
