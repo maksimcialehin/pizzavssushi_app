@@ -7,7 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import ListView from './src/screens/components/function_list_view';
 import DetailView from './src/screens/components/detail_view';
-import ScreenA from './src/screens/drawer/screenA';
+import AddPizzeria from './src/screens/drawer/addPizzeria';
 import ScreenB from './src/screens/drawer/screenB';
 import ScreenC from './src/screens/drawer/screenC';
 import TabOne from './src/screens/tabs/tab1';
@@ -39,7 +39,7 @@ export default function App() {
     <NavigationContainer>
       <Drawer.Navigator>
         <Drawer.Screen name="Home" children={this.renderScreenComponents} />
-        <Drawer.Screen name="Screen A" component={ScreenA} />
+        <Drawer.Screen name="Add Pizzeria" component={AddPizzeria} />
         <Drawer.Screen name="Screen B" component={ScreenB} />
         <Drawer.Screen name="Screen C" component={ScreenC} />
       </Drawer.Navigator>
